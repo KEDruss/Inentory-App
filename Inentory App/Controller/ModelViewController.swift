@@ -10,10 +10,11 @@ import UIKit
 import Firebase
 
 class ModelViewController: UIViewController, EditViewControllerDelegate {
-    let itemsReference = Database.database().reference()
-    var itemCell: Technical?
+    
+    var itemsReference = TableViewController.ref
+    var itemCell: List?
     var qrdata: String?
-    //var scannedCode: [Technical]?
+    //var scannedCode: [List]?
     
     @IBOutlet weak var nameModel: UILabel!
     @IBOutlet weak var inventoryLabel: UILabel!
@@ -22,14 +23,21 @@ class ModelViewController: UIViewController, EditViewControllerDelegate {
     @IBOutlet weak var imageQR: UIImageView!
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var comment: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
     var qrcodeImage: CIImage!
+    
+    @IBOutlet weak var itemBarButton: UIBarButtonItem!
+    
     @IBAction func editButton(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "EditItem", sender: nil)
+        
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
         configureView()
+        
     }
     //генератор QR code
     func qrCode (imgQR: UIImageView) {
@@ -50,7 +58,6 @@ class ModelViewController: UIViewController, EditViewControllerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
     }
     
@@ -65,18 +72,12 @@ class ModelViewController: UIViewController, EditViewControllerDelegate {
         }
     }
     //Сохранение данных при редактировании
-    func save(itemCell: Technical) {
-        let values: [String: Any] = ["Название модели": itemCell.nameModel,
-                                     "Отдел материальное лицо": itemCell.departments,
-                                     "Площадка Отдел выставочный зал": itemCell.location,
-                                     "Инвентарный номер": itemCell.inventoryNumber,
-                                     "Технические характеристики техники": itemCell.scpecification,
-                                     "Комментарии": itemCell.comment]
-        
-        itemsReference.child(itemCell.key).updateChildValues(values)
+    func save(itemCell: List) {
+        let listRef = TableViewController.ref.child(itemCell.key)
+        listRef.updateChildValues(itemCell.toAnyObject() as! [AnyHashable : Any])
         self.itemCell = itemCell
         configureView()
-//        TableViewController().tableView.reloadData()
+        
         // Сохранение после редактирования
     }
     //конфигурирование карточки техники
@@ -88,10 +89,10 @@ class ModelViewController: UIViewController, EditViewControllerDelegate {
             scpecificationView.text = item.scpecification
             location.text = "Площадка: \(item.location)"
             comment.text = item.comment
+            categoryLabel.text = item.category
             qrCode(imgQR: imageQR)
-
-            //imageQR.image = imageQR.image
-
+            
+            
         }
         func labelEditing (_ label: UILabel) -> Bool {
             
