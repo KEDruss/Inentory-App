@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        do{try Auth.auth().signOut()}catch{print(error.localizedDescription)}
+//        do{try Auth.auth().signOut()}catch{print(error.localizedDescription)}
     }
 
 

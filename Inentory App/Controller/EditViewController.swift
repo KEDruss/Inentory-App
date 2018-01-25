@@ -10,14 +10,14 @@ import UIKit
 import Firebase
 
 protocol EditViewControllerDelegate {
-    func save(itemCell: Technical)
+    func save(itemCell: List)
 }
 
 class EditViewController: UIViewController, UITextFieldDelegate {
-    
+
     let editItem = "EditItem"
-    let ref = Database.database().reference()
-    var itemCell: Technical?
+    var ref = TableViewController.ref
+    var itemCell: List?
     var delegate: EditViewControllerDelegate?
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameModelText: UITextField!
@@ -26,13 +26,26 @@ class EditViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var locationText: UITextField!
     @IBOutlet weak var scpecificationText: UITextView!
     @IBOutlet weak var comment: UITextView!
+    //@IBOutlet weak var categoryPicker: UIPickerView!
+    @IBOutlet weak var categoryTextField: UITextField!
+    var categoryPicker = UIPickerView()
     var imgQR = ModelViewController()
     var keyboardDismissTapGesture: UIGestureRecognizer?
+    var arrayCategory: [String] = ["телевизор", "телевизор ЭЛТ", "монитор", "рамка, монитор", "проектор", "линза, проектор", "экран, проектор", "плеер", "акустика", "акустика, телевизор", "пульт", "сенсорный стол", "компьютер", "микрофон", "планшет", "рекодер"]
+    var category = ""
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        categoryPicker.dataSource = self
+        categoryPicker.delegate = self
+
+        categoryTextField.inputView = categoryPicker
+        categoryTextField.textAlignment = .left
+        categoryTextField.placeholder = "Категория"
+        categoryTextField.resignFirstResponder()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -41,8 +54,8 @@ class EditViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
         super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     @objc func upadtetextView (notification: Notification){
         let userInfo = notification.userInfo!
@@ -56,6 +69,7 @@ class EditViewController: UIViewController, UITextFieldDelegate {
         
         if notification.name == Notification.Name.UIKeyboardWillHide {
             scrollView.contentInset = UIEdgeInsets.zero
+            scrollView.scrollIndicatorInsets = scrollView.contentInset
         } else {
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardEndFrame.height, right: 0)
             scrollView.scrollIndicatorInsets = scrollView.contentInset
@@ -75,6 +89,7 @@ class EditViewController: UIViewController, UITextFieldDelegate {
             locationText.text = item.location
             scpecificationText.text = item.scpecification
             comment.text = item.comment
+            categoryTextField.text = item.category
             if scpecificationText.text.isEmpty {
                 scpecificationText.text = "Технические характеристики"
                 scpecificationText.textColor = UIColor.lightGray
@@ -91,14 +106,16 @@ class EditViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
         //сохранение данных
         if itemCell == nil {
-            itemCell = Technical(nameModel: nameModelText.text!, departments: departmentText.text!, location: locationText.text!, inventoryNumber: inventoryNumberText.text!, scpecification: scpecificationText.text!, comment: comment.text!)
+            itemCell = List(nameModel: nameModelText.text!, departments: departmentText.text!, location: locationText.text!, inventoryNumber: inventoryNumberText.text!, scpecification: scpecificationText.text!, category: categoryTextField.text!, comment: comment.text!)
             
         } else {
-            itemCell = Technical(nameModel: nameModelText.text!, departments: departmentText.text!, location: locationText.text!, inventoryNumber: inventoryNumberText.text!, scpecification: scpecificationText.text!, comment: comment.text!, key: itemCell!.key)
+            itemCell = List(nameModel: nameModelText.text!, departments: departmentText.text!, location: locationText.text!, inventoryNumber: inventoryNumberText.text!, scpecification: scpecificationText.text!, category: categoryTextField.text!, comment: comment.text!, key: itemCell!.key)
             
         }
         delegate?.save(itemCell: itemCell!)
         self.navigationController?.popViewController(animated: true)
+        
+
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -110,12 +127,7 @@ class EditViewController: UIViewController, UITextFieldDelegate {
     @objc func dismissKeyboard(sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-    func sendData(itemCell: [Technical]) {
-        //
-    }
-    func checkData(data: String) {
-        //
-    }
+
     
 }
 extension EditViewController: UITextViewDelegate {
@@ -136,4 +148,20 @@ extension EditViewController: UITextViewDelegate {
         return true
     }
 }
-
+extension EditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return arrayCategory.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return arrayCategory[row]
+    
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        categoryTextField.text = arrayCategory[row]
+    }
+    
+}

@@ -7,22 +7,22 @@
 //
 import UIKit
 import Foundation
-//@IBDesignable class CustomView: UITextView, UITextViewDelegate {
-//    @IBInspectable var borderWith: CGFloat = 0.0 {
-//        didSet {
-//            layer.borderWidth = borderWith
-//        }
-//    }
-//    @IBInspectable var borderRarius: CGFloat = 0.0 {
-//        didSet {
-//            layer.cornerRadius = borderRarius
-//        }
-//    }
-//    @IBInspectable var borderColor: UIColor = .clear {
-//        didSet {
-//            layer.borderColor = borderColor.cgColor
-//        }
-//    }
-//
-//}
+@IBDesignable class CustomView: UITextView, UITextViewDelegate {
+    @IBInspectable var borderWith: CGFloat = 0.0 {
+        didSet {
+            layer.borderWidth = borderWith
+        }
+    }
+    @IBInspectable var borderRarius: CGFloat = 0.0 {
+        didSet {
+            layer.cornerRadius = borderRarius
+        }
+    }
+    @IBInspectable var borderColor: UIColor = .clear {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+
+}
 
