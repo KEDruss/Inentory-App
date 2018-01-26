@@ -45,11 +45,13 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard Auth.auth().currentUser != nil else { return }
-        print("проверка currentUser прошла")
+        
+        
         Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             guard user != nil else { return }
             print("проверка user прошла")
+            guard Auth.auth().currentUser != nil else { return }
+            print("проверка currentUser прошла")
             self?.touchMe.authenticateUser(completion: { [weak self] (message) in
                 if let message = message {
                     let alertView = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
@@ -58,6 +60,7 @@ class LoginViewController: UIViewController {
                     self?.present(alertView, animated: true)
                     return
                 } else {
+                    guard Auth.auth().currentUser != nil else { return }
                     print("Вот тут происходит второй переход")
                     self?.performSegue(withIdentifier: (self?.loginTo)!, sender: nil)
                     return
@@ -124,7 +127,24 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
+    @IBAction func touchIdLoginButton(_ sender: UIButton) {
+        
+        self.touchMe.authenticateUser(completion: { [weak self] (message) in
+            if let message = message {
+                let alertView = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alertView.addAction(okAction)
+                self?.present(alertView, animated: true)
+                return
+            } else {
+                guard Auth.auth().currentUser != nil else { return }
+                print("Вот тут происходит второй переход")
+                self?.performSegue(withIdentifier: (self?.loginTo)!, sender: nil)
+                return
+            }
+        })
+
+    }
     @IBAction func registerLogin(_ sender: UIButton) {
         let alert = UIAlertController(title: "Register",
                                       message: "Register",
@@ -171,8 +191,7 @@ class LoginViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-    @IBAction func changeUser(_ sender: UIButton) {
-    }
+
 }
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
