@@ -1,0 +1,72 @@
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "1Jj-W7-2Jr"; */
+"1Jj-W7-2Jr.normalTitle" = "Sign Up";
+
+/* Class = "UILabel"; text = "Scan"; ObjectID = "35A-xX-JAj"; */
+"35A-xX-JAj.text" = "Scan";
+
+/* Class = "UILabel"; text = "Department"; ObjectID = "8Ha-Tf-EaF"; */
+"8Ha-Tf-EaF.text" = "Department";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "BIl-SS-Uhl"; */
+"BIl-SS-Uhl.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "BWm-0a-4ch"; */
+"BWm-0a-4ch.normalTitle" = "Login";
+
+/* Class = "UITextField"; placeholder = "Инвентарный номер"; ObjectID = "Dxd-g7-dii"; */
+"Dxd-g7-dii.placeholder" = "Инвентарный номер";
+
+/* Class = "UILabel"; text = "Для входа в приложение введите email и password"; ObjectID = "FGa-5f-dL7"; */
+"FGa-5f-dL7.text" = "Для входа в приложение введите email и password";
+
+/* Class = "UILabel"; text = "Техническое описание:"; ObjectID = "Hzc-mj-Gb7"; */
+"Hzc-mj-Gb7.text" = "Техническое описание:";
+
+/* Class = "UILabel"; text = "Model"; ObjectID = "IZU-ko-TW3"; */
+"IZU-ko-TW3.text" = "Model";
+
+/* Class = "UITextField"; placeholder = "Материальное лицо"; ObjectID = "Id0-uP-KDk"; */
+"Id0-uP-KDk.placeholder" = "Материальное лицо";
+
+/* Class = "UILabel"; text = "Login"; ObjectID = "JeB-J0-IeC"; */
+"JeB-J0-IeC.text" = "Login";
+
+/* Class = "UILabel"; text = "No QR code is detected"; ObjectID = "LiC-88-fTK"; */
+"LiC-88-fTK.text" = "No QR code is detected";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "MvU-FF-VOx"; */
+"MvU-FF-VOx.text" = "Location";
+
+/* Class = "UINavigationItem"; title = "Список"; ObjectID = "OMB-YU-5Lf"; */
+"OMB-YU-5Lf.title" = "Список";
+
+/* Class = "UITextField"; placeholder = "Название Модели"; ObjectID = "XNC-d1-ybQ"; */
+"XNC-d1-ybQ.placeholder" = "Название Модели";
+
+/* Class = "UILabel"; text = "Inventory number"; ObjectID = "dhC-nj-RjA"; */
+"dhC-nj-RjA.text" = "Inventory number";
+
+/* Class = "UILabel"; text = "Comment"; ObjectID = "k3K-so-hj2"; */
+"k3K-so-hj2.text" = "Comment";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "l3f-pF-phE"; */
+"l3f-pF-phE.text" = "Category";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "lIw-9c-3fN"; */
+"lIw-9c-3fN.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Model name"; ObjectID = "q4f-Th-DTH"; */
+"q4f-Th-DTH.text" = "Model name";
+
+/* Class = "UIBarButtonItem"; title = "Выход"; ObjectID = "spL-FD-TFm"; */
+"spL-FD-TFm.title" = "Выход";
+
+/* Class = "UILabel"; text = "scpecificationView"; ObjectID = "suB-Yd-B1T"; */
+"suB-Yd-B1T.text" = "scpecificationView";
+
+/* Class = "UITextField"; placeholder = "Локация"; ObjectID = "tir-ex-kQs"; */
+"tir-ex-kQs.placeholder" = "Локация";
+
+/* Class = "UISearchDisplayController"; searchResultsTitle = "ewf"; ObjectID = "zLu-LK-6O3"; */
+"zLu-LK-6O3.searchResultsTitle" = "ewf";

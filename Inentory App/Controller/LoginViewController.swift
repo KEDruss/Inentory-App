@@ -42,30 +42,27 @@ class LoginViewController: UIViewController {
     @objc func kbDidHide() {
         (self.view as! UIScrollView).contentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if Auth.auth().currentUser != nil {
-            Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
-                if user != nil {
-                    //                guard Auth.auth().currentUser == nil else { return }
-                    self?.touchMe.authenticateUser(completion: { [weak self] (message) in
-                        if let message = message {
-                            let alertView = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default)
-                            alertView.addAction(okAction)
-                            self?.present(alertView, animated: true)
-                        } else {
-                            print("Вот тут происходит второй переход")
-                            self?.performSegue(withIdentifier: (self?.loginTo)!, sender: nil)
-                            
-                        }
-                    })
+        guard Auth.auth().currentUser != nil else { return }
+        print("проверка currentUser прошла")
+        Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
+            guard user != nil else { return }
+            print("проверка user прошла")
+            self?.touchMe.authenticateUser(completion: { [weak self] (message) in
+                if let message = message {
+                    let alertView = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default)
+                    alertView.addAction(okAction)
+                    self?.present(alertView, animated: true)
+                    return
                 } else {
+                    print("Вот тут происходит второй переход")
+                    self?.performSegue(withIdentifier: (self?.loginTo)!, sender: nil)
                     return
                 }
-            }
-        } else {
-            return
+            })
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
