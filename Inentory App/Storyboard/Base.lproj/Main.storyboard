@@ -18,6 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mp0-hR-rpX">
+                            <rect key="frame" x="0.0" y="72" width="375" height="43"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" id="abC-md-5sv" customClass="Cell" customModule="Inentory_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -76,6 +83,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
+                        <outlet property="label" destination="Mp0-hR-rpX" id="Mlj-3A-6qQ"/>
                         <outlet property="searchDisplayController" destination="zLu-LK-6O3" id="Jjh-SC-dIV"/>
                         <segue destination="6fM-4d-W6q" kind="show" identifier="DetailInfo" id="Btr-dH-G75"/>
                     </connections>
@@ -90,7 +98,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="228.75" y="-176.40845070422534"/>
+            <point key="canvasLocation" x="228" y="-176.76161919040482"/>
         </scene>
         <!--Scan Controller-->
         <scene sceneID="rAE-iK-GbG">
@@ -527,26 +535,47 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="zgn-7f-ewN">
                                         <rect key="frame" x="0.0" y="279.5" width="295" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-0a-4ch">
-                                                <rect key="frame" x="87.5" y="0.0" width="120" height="50"/>
-                                                <color key="backgroundColor" red="0.10326983522538501" green="0.58331843438223352" blue="0.06316859245532537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="4X0-6w-xSL"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="C9x-pp-9OC"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                                <state key="normal" title="Login">
-                                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <real key="value" value="6.0999999999999996"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="loginIn:" destination="AWl-eq-Scp" eventType="touchUpInside" id="bO7-1C-RBZ"/>
-                                                </connections>
-                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tbR-KB-NmE">
+                                                <rect key="frame" x="0.0" y="0.0" width="295" height="50"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="9dC-7U-fom">
+                                                        <rect key="frame" x="37.5" y="0.0" width="220" height="50"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-0a-4ch">
+                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="50"/>
+                                                                <color key="backgroundColor" red="0.10326983522538501" green="0.58331843438223352" blue="0.06316859245532537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="4X0-6w-xSL"/>
+                                                                    <constraint firstAttribute="width" constant="120" id="C9x-pp-9OC"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                                                <state key="normal" title="Login">
+                                                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <real key="value" value="6.0999999999999996"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="loginIn:" destination="AWl-eq-Scp" eventType="touchUpInside" id="bO7-1C-RBZ"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K6y-Ta-mYv">
+                                                                <rect key="frame" x="170" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="9Zk-Je-GwU"/>
+                                                                    <constraint firstAttribute="height" constant="50" id="wV4-3p-Quv"/>
+                                                                </constraints>
+                                                                <state key="normal" image="touchId"/>
+                                                                <connections>
+                                                                    <action selector="touchIdLoginButton:" destination="AWl-eq-Scp" eventType="touchUpInside" id="LJE-Kj-bBJ"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Jj-W7-2Jr">
                                                 <rect key="frame" x="87.5" y="80" width="120" height="30"/>
                                                 <constraints>
@@ -567,6 +596,10 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="tbR-KB-NmE" secondAttribute="trailing" id="SYH-aU-wee"/>
+                                            <constraint firstItem="tbR-KB-NmE" firstAttribute="leading" secondItem="zgn-7f-ewN" secondAttribute="leading" id="paA-PU-g1Q"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -626,6 +659,7 @@
     </scenes>
     <resources>
         <image name="cross" width="40" height="40"/>
+        <image name="touchId" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Nk4-yK-j01"/>

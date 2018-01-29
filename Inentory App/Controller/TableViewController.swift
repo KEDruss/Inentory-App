@@ -19,6 +19,9 @@ class Conectivity {
 
 class TableViewController: UITableViewController, EditViewControllerDelegate, SendDelegate {
     
+    @IBOutlet weak var label: UILabel!
+    
+    
     static var ref: DatabaseReference!
     let usersReference = Database.database().reference(withPath: "online")
     let searchController = UISearchController(searchResultsController: nil)
@@ -44,6 +47,10 @@ class TableViewController: UITableViewController, EditViewControllerDelegate, Se
         
         
         TableViewController.ref = Database.database().reference(withPath: "users").child(String(user.uid)).child("lists")
+        
+        searchController.searchBar.scopeButtonTitles = ["All", "Chocolate", "Hard", "Other"]
+        searchController.searchBar.delegate = self
+        //tableView.tableFooterView = searchFooter
         
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if let curUser = user {
@@ -118,26 +125,29 @@ class TableViewController: UITableViewController, EditViewControllerDelegate, Se
     }
     func filterContentForSearchText (_ searchText: String, scope: String = "All") {
         filterTechnical = items.filter { (item: List) -> Bool in
-            if item.nameModel.lowercased().contains(searchText.lowercased()) {
-                return true
-            } else if item.inventoryNumber.lowercased().contains(searchText.lowercased()) {
-                return true
-            } else if item.departments.lowercased().contains(searchText.lowercased()) {
-                return true
-            } else if item.location.lowercased().contains(searchText.lowercased()) {
-                return true
-            } else if item.scpecification.lowercased().contains(searchText.lowercased()) {
-                return true
-            } else if item.comment.lowercased().contains(searchText.lowercased()) {
-                return true
-            } else {return false}
-            
+            let doesCategoryMatch = (scope == "All") || (item.category == scope)
+            if searchBarIsEmpty() {
+                return doesCategoryMatch
+            } else if doesCategoryMatch && item.nameModel.lowercased().contains(searchText.lowercased()) {
+                    return true
+                } else if item.inventoryNumber.lowercased().contains(searchText.lowercased()) {
+                    return true
+                } else if item.departments.lowercased().contains(searchText.lowercased()) {
+                    return true
+                } else if item.location.lowercased().contains(searchText.lowercased()) {
+                    return true
+                } else if item.scpecification.lowercased().contains(searchText.lowercased()) {
+                    return true
+                } else if item.comment.lowercased().contains(searchText.lowercased()) {
+                    return true
+                } else {return false}
         }
         tableView.reloadData()
     }
     
     func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
     }
     
     // MARK: - Table view data source
@@ -273,6 +283,17 @@ class TableViewController: UITableViewController, EditViewControllerDelegate, Se
 }
 extension TableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
+}
+extension TableViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![
+        selectedScope])
+    }
+    
+    
 }
